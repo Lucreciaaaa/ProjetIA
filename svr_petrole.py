@@ -14,8 +14,8 @@ from sklearn.svm import SVR
 from sklearn.metrics import mean_squared_error, r2_score
 import matplotlib.pyplot as plt
 
-
-# date pas prise en compte pour les predictions
+# dataset de données journalières sur 19 ans
+# la date n'est pas prise en compte pour les predictions
 
 ''' PRETRAITEMENT '''
 

@@ -5,6 +5,7 @@
 @author: lfodo
 """
 
+# dataset de données journalières sur 19 ans
 # predictions avec prise en compte de la saisonnalité
 
 
@@ -14,6 +15,17 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
+
+from webscrapping import get_price  # fichier python
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+import time
+from bs4 import BeautifulSoup
+from decimal import Decimal
+from selenium.webdriver.support.select import Select
+
 
 # Fonction de conversion du volume
 def convert_volume(volume):
@@ -81,3 +93,64 @@ plt.ylabel('Valeur réelle')
 plt.title('Prédiction vs Réalité')
 plt.legend()
 plt.show()
+
+
+
+
+''' PREDICTIONS FUTURES '''
+
+# Récupérer le prix actuel du pétrole brut
+current_oil_price = get_price()
+if current_oil_price:
+    print("Prix actuel du pétrole brut :", current_oil_price, " (USD)")
+else:
+    print("Prix non trouvé")
+    
+    
+    
+    
+    
+    
+
+def generate_features_for_date(date):
+    # Ici, vous pouvez implémenter la logique pour générer les caractéristiques
+    # en fonction de la date donnée. Vous pouvez utiliser des données historiques
+    # ou tout autre paramètre pertinent pour créer les caractéristiques.
+
+    # Par exemple, pour cet exemple, je vais simplement créer des caractéristiques
+    # factices pour illustrer le processus.
+    features = {
+        'Open': 70.0,  # Prix d'ouverture fictif
+        'High': 72.0,  # Prix le plus haut fictif
+        'Low': 68.0,   # Prix le plus bas fictif
+        'Vol.': 500000.0,  # Volume fictif
+        'Change %': -2.0,  # Variation fictive du prix en pourcentage
+        'Year': date.year,
+        'Month': date.month,
+        'Day': date.day,
+        'Day_of_week': date.weekday()  # Jour de la semaine (0 pour lundi, 6 pour dimanche)
+    }
+    return features
+
+# Exemple d'utilisation de la fonction pour générer les caractéristiques pour le 23 mai 2024
+date_23_may_2024 = pd.Timestamp('2024-05-23')
+features_for_23_may_2024 = generate_features_for_date(date_23_may_2024)
+print("Caractéristiques pour le 23 mai 2024 :", features_for_23_may_2024)
+
+
+# Prédiction avec le modèle RandomForestRegressor
+predicted_price_23_may_2024 = rf.predict([features_for_23_may_2024])
+
+# Affichage de la prédiction
+print("Prédiction du prix du pétrole brut pour le 23 mai 2024 :", predicted_price_23_may_2024)
+
+# Comparaison avec le prix actuel du pétrole
+if current_oil_price:
+    print("Prix actuel du pétrole brut :", current_oil_price, " (USD)")
+    price_difference = predicted_price_23_may_2024 - current_oil_price
+    print("Différence entre la prédiction et le prix actuel :", price_difference)
+else:
+    print("Prix actuel non trouvé")
+
+    
+
