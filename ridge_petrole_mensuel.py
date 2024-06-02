@@ -44,10 +44,9 @@ pipeline = Pipeline([
     ('ridge', Ridge())
 ])
 
-# Grille des hyperparamètres à rechercher
+# Grille des hyperparamètres 
 param_grid = {
-    'ridge__alpha': [0.001, 0.01, 0.1, 1, 10, 100]  # Valeurs à tester pour alpha
-}
+    'ridge__alpha': [0.001, 0.01, 0.1, 1, 10, 100]}
 
 # Recherche des meilleurs hyperparamètres avec validation croisée
 grid_search = GridSearchCV(pipeline, param_grid, cv=5, scoring='neg_mean_squared_error')

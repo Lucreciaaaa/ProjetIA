@@ -25,7 +25,7 @@ from selenium.webdriver.support.select import Select
 options = webdriver.ChromeOptions()
 #options.add_argument('headless')
 driver = webdriver.Chrome()
-driver.get("https://www.investing.com/commodities/crude-oil-historical-data")
+driver.get("https://www.investing.com/commodities/crude-oil")
 time.sleep(2)
 
 # ---------------------------------
